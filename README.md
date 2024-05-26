@@ -1,21 +1,35 @@
-### 1. Create Task
+# Task API Documentation
 
-Endpoint: `POST /tasks`
+## Overview
 
-Description: This endpoint is used to create a new task.
+This documentation provides an overview of the Task API endpoints and their functionalities. The API allows you to create, read, update, and delete tasks. Each endpoint's request and response formats are detailed below.
 
-//Request Body:
+## Endpoints
 
+### Create Task
 
+#### Endpoint
+
+```http
+POST /tasks
+```
+
+#### Description
+
+Create a new task.
+
+#### Request Body
+
+```json
 {
   "title": "Task Title",
   "description": "Task Description"
 }
+```
 
+#### Response
 
-//Response:
-
-json
+```json
 {
   "Message": "Task creation successful",
   "task": {
@@ -26,15 +40,21 @@ json
 }
 ```
 
-2. Read All Tasks
+### Read All Tasks
 
-//Endpoint: `GET /tasks`
+#### Endpoint
 
-**Description:** This endpoint retrieves a list of all tasks.
+```http
+GET /tasks
+```
 
-//Response:
+#### Description
 
+Retrieve a list of all tasks.
 
+#### Response
+
+```json
 {
   "Message": "List of all tasks",
   "Tasks": [
@@ -51,231 +71,146 @@ json
     // ... other tasks
   ]
 }
+```
 
-3. Read One Task
+### Read One Task
 
-//Endpoint:`GET /tasks/:id`
+#### Endpoint
 
-Description: This endpoint retrieves details of a specific task by its ID.
+```http
+GET /tasks/:id
+```
 
-//Response:
+#### Description
 
+Retrieve details of a specific task.
 
+#### Response
+
+```json
 {
   "id": "uniqueId",
   "title": "Task Title",
   "description": "Task Description"
 }
+```
 
+#### Error Response
 
-Error Response:
-
-
+```json
 {
   "error": "Task not found"
 }
+```
 
-4. Update Task
+### Update Task
 
-//Endpoint: `PUT /tasks/:id`
+#### Endpoint
 
-Description: This endpoint updates the details of a specific task by its ID.
+```http
+PUT /tasks/:id
+```
 
-//Request Body:
+#### Description
 
+Update details of a specific task.
 
+#### Request Body
+
+```json
 {
   "title": "Updated Task Title",
   "description": "Updated Task Description"
 }
+```
 
+#### Response
 
-//Response:
-
-
+```json
 {
   "id": "uniqueId",
   "title": "Updated Task Title",
   "description": "Updated Task Description"
 }
+```
 
-
-Error Response:
-
-
-{
-  "error": "Task not found"
-}
-
- 5. Delete Task
-
-//Endpoint: `DELETE /tasks/:id`
-
-Description: This endpoint deletes a specific task by its ID.
-
-//Response:
-
-
-{
-  "Message": "Deleted Task",
-  "ListTask": [
-    // ... remaining tasks after deletion
-  ]
-}
-
-
-//Error Response:
-
-
-{
-  "error": "Task not found"
-}
-
-
-//Usage Examples
-
-### Example 1: Creating a Task
-
-//Request:
-
-
-POST /tasks
-Content-Type: application/json
-
-{
-  "title": "Finish Assignment",
-  "description": "Complete the math assignment by tomorrow."
-}
-
-
-//Response:
-
-
-{
-  "Message": "Task creation successful",
-  "task": {
-    "id": "abc123",
-    "title": "Finish Assignment",
-    "description": "Complete the math assignment by tomorrow."
-  }
-}
-
-
-Example 2: Reading All Tasks
-
-Request:
-
-
-GET /tasks
-
-
-Response:
+#### Error Response
 
 ```json
 {
-  "Message": "List of all tasks",
-  "Tasks": [
-    {
-      "id": "abc123",
-      "title": "Finish Assignment",
-      "description": "Complete the math assignment by tomorrow."
-    },
-    {
-      "id": "def456",
-      "title": "Buy Groceries",
-      "description": "Buy milk, eggs, and bread."
-    }
-    // ... other tasks
-  ]
+  "error": "Task not found"
 }
+```
 
+### Delete Task
 
-### Example 3: Reading a Specific Task
-
-**Request:**
+#### Endpoint
 
 ```http
-GET /tasks/abc123
+DELETE /tasks/:id
 ```
 
-//Response:
+#### Description
 
+Delete a specific task.
 
-{
-  "id": "abc123",
-  "title": "Finish Assignment",
-  "description": "Complete the math assignment by tomorrow."
-}
+#### Response
 
-
-//Error Response:
-
-
-{
-  "error": "Task not found"
-}
-
-
-Example 4: Updating a Task
-
-//Request:
-
-
-PUT /tasks/abc123
-Content-Type: application/json
-
-{
-  "title": "Complete Assignment",
-  "description": "Finish the math assignment by tonight."
-}
-
-
-//Response:**
-
-
-{
-  "id": "abc123",
-  "title": "Complete Assignment",
-  "description": "Finish the math assignment by tonight."
-}
-
-
-//Error Response:
-
-
-{
-  "error": "Task not found"
-}
-
-Example 5: Deleting a Task
-
-//Request:
-
-
-DELETE /tasks/abc123
-```
-
-//Response:
-
-
+```json
 {
   "Message": "Deleted Task",
   "ListTask": [
     // ... remaining tasks after deletion
   ]
 }
+```
 
+#### Error Response
 
-//Error Response:
-
-json
+```json
 {
   "error": "Task not found"
 }
+```
 
+## How to Use the API
 
- //Notes
+### Create a New Task
 
-- The `id` field in the responses represents a unique identifier for each task.
-- Ensure that the request body for `POST` and `PUT` requests is in JSON format.
-- The error responses will be returned with a 404 status code if the task is not found.
+To create a new task, send a `POST` request to the `/tasks` endpoint with a JSON body containing the task's title and description.
+
+### Retrieve All Tasks
+
+To get a list of all tasks, send a `GET` request to the `/tasks` endpoint. The response will contain a list of all tasks.
+
+### Retrieve a Specific Task
+
+To get details of a specific task, send a `GET` request to the `/tasks/:id` endpoint, replacing `:id` with the unique ID of the task.
+
+### Update a Task
+
+To update a specific task, send a `PUT` request to the `/tasks/:id` endpoint with a JSON body containing the updated title and description.
+
+### Delete a Task
+
+To delete a specific task, send a `DELETE` request to the `/tasks/:id` endpoint. The response will confirm the deletion and provide the remaining tasks.
+
+## Error Handling
+
+If a task is not found, the API will respond with an error message:
+
+```json
+{
+  "error": "Task not found"
+}
+```
+
+Ensure you handle these error responses appropriately in your application to provide a smooth user experience.
+
+## Contact Information
+
+If you have any questions or need further assistance, please contact the support team.
+
+---
+
+**Note:** This documentation is for the Task API endpoints. Make sure to replace `:id` with the actual task ID when making requests.
